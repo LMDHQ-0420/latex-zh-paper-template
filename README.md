@@ -15,9 +15,8 @@
 
 ```
 .
-├── main.tex        # 主文档（含模版使用说明）
-├── refs.bib        # 参考文献数据库
-└── .latexmkrc      # latexmk 编译配置
+├── main.tex    # 主文档（含模版使用说明）
+└── refs.bib    # 参考文献数据库
 ```
 
 ## 编译要求
@@ -31,7 +30,16 @@
 latexmk -xelatex -bibtex main.tex
 ```
 
-或使用 VS Code + LaTeX Workshop，项目已包含 `.latexmkrc` 配置，保存即自动编译。
+VS Code + LaTeX Workshop 用户：确保 `/Library/TeX/texbin` 在系统 PATH 中，
+然后保存 `main.tex` 即可自动编译。
+
+macOS 可运行以下命令一次性修复：
+
+```bash
+echo "/Library/TeX/texbin" | sudo tee /etc/paths.d/tex
+```
+
+完全退出 VS Code 后重新打开生效。
 
 ## 使用方法
 
