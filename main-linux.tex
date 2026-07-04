@@ -1,0 +1,216 @@
+% ============================================================
+% 双栏中文学术论文模版 — Linux 版
+% 中文字体：Fandol（TeX Live 自带，无需额外安装）
+% 英文字体：TeX Gyre Termes / Heros / Cursor（Times/Arial/Courier 的开源替代）
+% 编译：xelatex main-linux.tex
+% ============================================================
+\documentclass[10pt, twocolumn, a4paper]{article}
+
+% ---- 基础编码与中文支持 ----
+\usepackage[UTF8, heading=true, fontset=fandol]{ctex}
+\ctexset{
+  section/format       = \heiti\zihao{-4}\bfseries,
+  subsection/format    = \heiti\zihao{5}\bfseries,
+  subsubsection/format = \kaishu\zihao{5},
+}
+
+% ---- 页面尺寸 ----
+\usepackage[
+  a4paper,
+  top=19mm, bottom=25mm,
+  left=15mm, right=15mm,
+  columnsep=5mm
+]{geometry}
+
+% ---- 字体（TeX Gyre 系列，TeX Live 自带）----
+\usepackage{fontspec}
+\setmainfont{TeX Gyre Termes}   % Times New Roman 的开源替代
+\setsansfont{TeX Gyre Heros}    % Arial/Helvetica 的开源替代
+\setmonofont{TeX Gyre Cursor}   % Courier New 的开源替代
+
+% ---- 行距 ----
+\usepackage{setspace}
+\setstretch{1.1}
+
+% ---- 图表 ----
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{float}
+\usepackage{subfigure}
+
+% ---- 数学 ----
+\usepackage{amsmath, amssymb, amsthm}
+\newtheorem{theorem}{定理}
+\newtheorem{lemma}{引理}
+\newtheorem{definition}{定义}
+
+% ---- 算法 ----
+\usepackage[ruled, linesnumbered]{algorithm2e}
+\SetAlFnt{\small}
+
+% ---- 超链接 ----
+\usepackage[
+  colorlinks=true,
+  linkcolor=black,
+  citecolor=blue,
+  urlcolor=blue
+]{hyperref}
+
+% ---- 参考文献 ----
+\usepackage[numbers, sort&compress]{natbib}
+\bibliographystyle{unsrtnat}
+
+% ---- 页眉页脚：仅保留页脚页码 ----
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% ---- 标题信息（按需修改）----
+\title{
+  \vspace{-1em}
+  {\heiti\zihao{2} 论文标题}\\[4pt]
+  {\zihao{-4} Paper Title in English}
+}
+\author{
+  \zihao{-4}
+  作者一$^{1}$\quad 作者二$^{2}$\\[2pt]
+  \zihao{5}
+  $^{1}$单位一，城市 邮编\\
+  $^{2}$单位二，城市 邮编\\[2pt]
+  \texttt{\zihao{5} email@example.com}
+}
+\date{}
+
+% ============================================================
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+% ============================================================
+% 本节介绍模版整体结构
+% ============================================================
+\section{模版说明}
+
+本模版适用于双栏中文学术论文写作，风格参考 CCF-A 会议与 IEEE 期刊排版规范。
+文档类为 \texttt{article}，使用 \texttt{ctex} 宏包提供中文支持，
+编译方式为 XeLaTeX。
+
+% ============================================================
+\section{文档结构}
+
+论文正文结构不固定，按需使用以下命令划分层次：
+
+\begin{itemize}
+  \item \verb|\section{标题}| — 一级节，黑体小四加粗
+  \item \verb|\subsection{标题}| — 二级节，黑体五号加粗
+  \item \verb|\subsubsection{标题}| — 三级节，楷书五号
+\end{itemize}
+
+% ============================================================
+\section{字体与字号}
+
+正文使用 10pt TeX Gyre Termes（英文）与宋体（中文）。
+用 \verb|\zihao{n}| 手动切换字号，常用对照如下：
+
+\begin{itemize}
+  \item \verb|\zihao{2}| — 二号，标题
+  \item \verb|\zihao{-4}| — 小四，作者行
+  \item \verb|\zihao{5}| — 五号，图表说明、脚注
+\end{itemize}
+
+用 \verb|\heiti|、\verb|\songti|、\verb|\kaishu| 切换黑体、宋体、楷书。
+英文加粗用 \verb|\textbf{}|，斜体用 \verb|\textit{}|。
+
+% ============================================================
+\section{数学公式}
+
+行内公式用 \verb|$...$|，例如损失函数 $\mathcal{L} = \frac{1}{n}\sum_i \ell_i$。
+
+独立编号公式用 \texttt{equation} 环境：
+\begin{equation}
+  \mathcal{L} = \frac{1}{n}\sum_{i=1}^{n} \ell\!\left(f(x_i),\, y_i\right)
+  \label{eq:example}
+\end{equation}
+
+用 \verb|\eqref{eq:example}| 引用公式，得到式~\eqref{eq:example}。
+多行对齐公式使用 \texttt{align} 环境。
+
+% ============================================================
+\section{图与表}
+
+\subsection{插图}
+
+用 \texttt{figure} 环境插图，位置参数推荐 \verb|[t]|（当前栏顶部）。
+跨双栏大图用 \verb|figure*| 环境。
+
+\begin{figure}[t]
+  \centering
+  % 取消注释并替换路径：
+  % \includegraphics[width=\linewidth]{figs/example.pdf}
+  \fbox{\rule{0pt}{2.5cm}\rule{\linewidth}{0pt}}
+  \caption{图题写在图下方，五号字。}
+  \label{fig:example}
+\end{figure}
+
+用 \verb|\ref{fig:example}| 引用，得到图~\ref{fig:example}。
+
+\subsection{表格}
+
+表题写在表格上方。推荐使用 \texttt{booktabs} 的三线表风格。
+
+\begin{table}[t]
+  \centering
+  \caption{表题写在表格上方}
+  \label{tab:example}
+  \zihao{5}
+  \begin{tabular}{lcc}
+    \toprule
+    方法 & 指标A & 指标B \\
+    \midrule
+    基线方法 & 72.3 & 68.1 \\
+    \textbf{本文方法} & \textbf{78.9} & \textbf{75.6} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+% ============================================================
+\section{算法}
+
+用 \texttt{algorithm2e} 环境描述算法，位置参数用 \verb|[t]|。
+
+\begin{algorithm}[t]
+\caption{算法示例}
+\label{alg:example}
+\KwIn{输入数据 $\mathcal{D}$，学习率 $\eta$}
+\KwOut{模型参数 $\theta$}
+初始化 $\theta$\;
+\For{每个训练轮次}{
+  采样小批量 $\mathcal{B} \subset \mathcal{D}$\;
+  $\theta \leftarrow \theta - \eta \nabla_\theta \mathcal{L}(\mathcal{B};\theta)$\;
+}
+\Return $\theta$\;
+\end{algorithm}
+
+% ============================================================
+\section{参考文献}
+
+参考文献统一管理在 \texttt{refs.bib} 文件中，正文用
+\verb|\cite{key}| 引用，编译后自动生成编号。
+
+示例引用：深度学习综述见~\cite{lecun2015deep}，
+Transformer 架构见~\cite{vaswani2017attention}，
+ResNet 见~\cite{he2016deep}。
+
+引用风格为按出现顺序排列的数字格式（\texttt{unsrtnat}），
+若需要作者-年份格式，将 \verb|\bibliographystyle| 改为
+\texttt{plainnat} 并去掉 \texttt{natbib} 的 \texttt{numbers} 选项。
+
+% ---- 参考文献 ----
+\bibliography{refs}
+
+\end{document}
