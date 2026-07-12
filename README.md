@@ -8,13 +8,23 @@
 
 ## 按系统选择模版文件
 
+### 双栏版
+
 | 文件 | 适用系统 | 中文字体集 | 英文主字体 |
 |------|----------|------------|------------|
 | `main-mac.tex` | macOS | `fontset=mac` | Times New Roman |
 | `main-win.tex` | Windows | `fontset=windows` | Times New Roman |
 | `main-linux.tex` | Linux | `fontset=fandol` | TeX Gyre Termes |
 
-直接使用 `main.tex`（无后缀）默认为 macOS 配置。
+### 单栏版
+
+| 文件 | 适用系统 | 中文字体集 | 英文主字体 |
+|------|----------|------------|------------|
+| `main-mac-single.tex` | macOS | `fontset=mac` | Times New Roman |
+| `main-win-single.tex` | Windows | `fontset=windows` | Times New Roman |
+| `main-linux-single.tex` | Linux | `fontset=fandol` | TeX Gyre Termes |
+
+单栏版与双栏版的差异：去掉 `twocolumn` 选项，左右页边距从 15mm 调整为 25mm。
 
 ## 字体说明
 
@@ -48,13 +58,32 @@ Linux 版使用 [TeX Gyre](https://www.gust.org.pl/projects/e-foundry/tex-gyre) 
 
 ## 编译
 
+双栏版：
+
 ```bash
 xelatex main-mac.tex    # macOS
 xelatex main-win.tex    # Windows
 xelatex main-linux.tex  # Linux
 ```
 
-若使用 latexmk：
+单栏版：
+
+```bash
+xelatex main-mac-single.tex    # macOS
+xelatex main-win-single.tex    # Windows
+xelatex main-linux-single.tex  # Linux
+```
+
+含参考文献的完整编译流程：
+
+```bash
+xelatex main-mac.tex
+bibtex main-mac
+xelatex main-mac.tex
+xelatex main-mac.tex
+```
+
+或使用 latexmk 自动处理：
 
 ```bash
 latexmk -xelatex main-mac.tex
